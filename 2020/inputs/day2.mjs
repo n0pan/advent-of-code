@@ -1,4 +1,4 @@
-const passwords = [
+export const passwords = [
   "2-8 t: pncmjxlvckfbtrjh",
   "8-9 l: lzllllldsl",
   "3-11 c: ccchcccccclxnkcmc",
@@ -1000,39 +1000,3 @@ const passwords = [
   "9-10 t: ttttttttnt",
   "10-11 x: xxxxxxxxxcv"
 ];
-
-function splitPassword(password) {
-  const splitPassword = password.split(" ");
-  const policy = getPolicy(splitPassword[0], splitPassword[1]);
-  return { ...policy, password: splitPassword[2] };
-}
-
-function getPolicy(limit, policyLetter) {
-  const letterLimit = limit.split("-");
-  const affectedLetter = policyLetter.charAt(0);
-
-  return {
-    letter: affectedLetter,
-    firstIndex: parseInt(letterLimit[0]),
-    secondIndex: parseInt(letterLimit[1])
-  };
-}
-
-function getNumberOfValidPasswords(passwords) {
-  let validCount = 0;
-  passwords.forEach(pw => {
-    const password = splitPassword(pw);
-    const pass = password.password;
-    const { firstIndex, secondIndex, letter } = password;
-    if (
-      (pass[firstIndex - 1] === letter && pass[secondIndex - 1] !== letter) ||
-      (pass[firstIndex - 1] !== letter && pass[secondIndex - 1] === letter)
-    ) {
-      validCount += 1;
-    }
-  });
-  console.log("validCount: ", validCount);
-  return validCount;
-}
-
-getNumberOfValidPasswords(passwords);

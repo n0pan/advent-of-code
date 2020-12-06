@@ -1,4 +1,4 @@
-let input = [
+export const input = [
   1384,
   1396,
   1072,
@@ -200,27 +200,3 @@ let input = [
   1166,
   1929
 ];
-
-function multiply(x, y, z) {
-  return x * y * z;
-}
-
-function sumTo2020(inputList) {
-  inputList.forEach(input => {
-    inputList.forEach(comparativeInput => {
-      inputList.forEach(secondComparativeInput => {
-        if (input + comparativeInput + secondComparativeInput === 2020) {
-          console.log("input: ", input);
-          console.log("comparativeInput: ", comparativeInput);
-          console.log("secondComparativeInput: ", secondComparativeInput);
-          console.log(
-            "multiply(input, comparativeInput, secondComparativeInput) ",
-            multiply(input, comparativeInput, secondComparativeInput)
-          );
-        }
-      });
-    });
-  });
-}
-
-sumTo2020(input);
