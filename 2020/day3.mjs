@@ -20,3 +20,4 @@ while (map[currentRow][currentColumn]) {
 }
 
 console.log("numOfTrees: ", numOfTrees);
+console.log('map[0]: ', map[0]);
