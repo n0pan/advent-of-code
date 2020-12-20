@@ -1,3 +1,17 @@
+export const sampleInput = `eyr:1972 cid:100
+hcl:#18171d ecl:amb hgt:170 pid:186cm iyr:2018 byr:1926
+
+iyr:2019
+hcl:#602927 eyr:1967 hgt:170cm
+ecl:grn pid:012533040 byr:1946
+
+hcl:dab227 iyr:2012
+ecl:brn hgt:182cm pid:021572410 eyr:2020 byr:1992 cid:277
+
+hgt:59cm ecl:zzz
+eyr:2038 hcl:74454a iyr:2023
+pid:3556412378 byr:2007`
+
 export const input = `ecl:hzl byr:1926 iyr:2010
 pid:221225902 cid:61 hgt:186cm eyr:2021 hcl:#7d3b0c
 
@@ -648,6 +662,7 @@ hgt:69in
 ecl:hzl
 pid:544135985 hcl:#ceb3a1 eyr:2020
 
+hcl:92d4a1 iyr:2018 pid:178cm
 cid:347
 hgt:97 eyr:2017
 ecl:gmt byr:2004

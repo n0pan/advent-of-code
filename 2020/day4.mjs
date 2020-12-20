@@ -22,26 +22,22 @@ function validatePassport(passport) {
   const passportKeys = Object.keys(passport);
   return REQUIRED_FIELDS.every(field => {
     if (passportKeys.includes(field)) {
-      return validateField(passport);
+      return validateField({ key: field, value: passport[field] });
     }
     return false;
   });
 }
 
-function validateField(passportField) {
-  const key = Object.keys(passportField)[0];
-  const value = passportField[key];
+function validateField({ key, value }) {
   switch (key) {
     case "byr":
       if (value.length === 4) {
         if (Number(value) >= 1920 && Number(value) <= 2002) {
           return true;
-        } else {
-          return false;
         }
-      } else {
         return false;
       }
+      return false;
     case "iyr":
       if (value.length === 4) {
         if (Number(value) >= 2010 && Number(value) <= 2020) {
