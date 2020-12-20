@@ -16,12 +16,8 @@ function formatPassports(input) {
   return cleanedPassports;
 }
 
-// function validatePassports(passports) {
-//   const cleanedPassports = passports.map(p => {
-//     const passportFields = p.split(" ");
-//     console.log('passportFields: ', passportFields);
-//   });
-// }
+function validatePassport(passport) {
+}
 
 const passports = formatPassports(input);
 // validatePassports(passports);
