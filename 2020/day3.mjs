@@ -1,23 +1,29 @@
 import { input } from "./inputs/day3.mjs";
 
-const map = input.map(line => line.split(""));
+const TREE = "#";
+const STARTING_COLUMN = 3;
+const STARTING_ROW = 1;
+let currentMap = input;
 
-let numOfTrees = 0;
-
-let currentColumn = 3;
-let currentRow = 1;
-
-while (map[currentRow][currentColumn]) {
-  console.log(
-    "map[currentRow][currentColumn]: ",
-    map[currentRow][currentColumn]
-  );
-  if (map[currentRow][currentColumn] === "#") {
-    numOfTrees += 1;
-  }
-  currentColumn += 3;
-  currentRow += 1;
+function duplicateMap(input) {
+  input.forEach((row, index) => {
+    input[index] = row.concat(input[index]);
+  });
 }
 
-console.log("numOfTrees: ", numOfTrees);
-console.log('map[0]: ', map[0]);
+let numberOfTrees = 0;
+let currentColumn = STARTING_COLUMN;
+let currentRow = STARTING_ROW;
+
+while (currentRow <= currentMap.length - 1) {
+  if (currentColumn >= currentMap[currentRow].length) {
+    duplicateMap(currentMap);
+  }
+  if (currentMap[currentRow].charAt(currentColumn) === TREE) {
+    ++numberOfTrees;
+  }
+  currentColumn += STARTING_COLUMN;
+  currentRow += STARTING_ROW;
+}
+
+console.log("numberOfTrees: ", numberOfTrees);
