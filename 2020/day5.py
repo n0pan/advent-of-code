@@ -1,156 +1,89 @@
-from math import floor, ceil
+f = open("./inputs/day5.txt")
+boarding_passes = filter(lambda x: x != "", f.read().split("\n"))
+
+INITIAL_ROW_RANGE = range(128)
+INITIAL_COLUMN_RANGE = range(8)
 
 FRONT = "F"
 BACK = "B"
 LEFT = "L"
 RIGHT = "R"
 
-ROW_RANGE = {"start": 0, "end": 127}
-COLUMN_RANGE = {"start": 0, "end": 7}
-
-SEAT = {"pass": "", "row": ROW_RANGE, "column": COLUMN_RANGE, "seatID": ""}
+seats = []
 
 
-def get_seat(boarding_pass, current_char_index, current_seat):
-    if current_char_index <= len(boarding_pass) - 1:
-        if boarding_pass[current_char_index] == FRONT:
-            if boarding_pass[current_char_index + 1] == LEFT:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": {
-                            "start": current_seat["row"]["start"],
-                            "end": current_seat["row"]["start"],
-                        },
-                        "column": current_seat["column"],
-                        "seatID": "",
-                    },
-                )
-            elif boarding_pass[current_char_index + 1] == RIGHT:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": {
-                            "start": current_seat["row"]["end"],
-                            "end": current_seat["row"]["end"],
-                        },
-                        "column": current_seat["column"],
-                        "seatID": "",
-                    },
-                )
-            else:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": {
-                            "start": current_seat["row"]["start"],
-                            "end": floor(current_seat["row"]["end"] / 2),
-                        },
-                        "column": current_seat["column"],
-                        "seatID": "",
-                    },
-                )
-        elif boarding_pass[current_char_index] == BACK:
-            return get_seat(
-                boarding_pass,
-                current_char_index + 1,
-                {
-                    "pass": boarding_pass,
-                    "row": {
-                        "start": ceil(current_seat["row"]["end"] / 2),
-                        "end": current_seat["row"]["end"],
-                    },
-                    "column": current_seat["column"],
-                    "seatID": "",
-                },
-            )
-        elif boarding_pass[current_char_index] == LEFT:
-            if current_char_index == len(boarding_pass) - 1:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": current_seat["row"],
-                        "column": {
-                            "start": current_seat["column"]["start"],
-                            "end": current_seat["column"]["start"],
-                        },
-                        "seatID": "",
-                    },
-                )
-            else:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": current_seat["row"],
-                        "column": {
-                            "start": current_seat["column"]["start"],
-                            "end": floor(current_seat["column"]["end"] / 2),
-                        },
-                        "seatID": "",
-                    },
-                )
-        elif boarding_pass[current_char_index] == RIGHT:
-            if current_char_index == len(boarding_pass) - 1:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": current_seat["row"],
-                        "column": {
-                            "start": current_seat["column"]["end"],
-                            "end": current_seat["column"]["end"],
-                        },
-                        "seatID": "",
-                    },
-                )
-            else:
-                return get_seat(
-                    boarding_pass,
-                    current_char_index + 1,
-                    {
-                        "pass": boarding_pass,
-                        "row": current_seat["row"],
-                        "column": {
-                            "start": ceil(current_seat["column"]["end"] / 2),
-                            "end": current_seat["column"]["end"],
-                        },
-                        "seatID": "",
-                    },
-                )
-    else:
-        return {
-            "pass": current_seat["pass"],
-            "row": current_seat["row"],
-            "column": current_seat["column"],
-            "seatID": current_seat["row"]["start"] * 8 + current_seat["column"]["start"],
+def get_lower_half(value_range):
+    return value_range[slice(len(value_range) / 2)]
+
+
+def get_upper_half(value_range):
+    return value_range[slice(len(value_range) / 2, len(value_range))]
+
+
+def get_seat_id(row, column):
+    return row * 8 + column
+
+
+for boarding_pass in boarding_passes:
+    row = boarding_pass[slice(7)]
+    column = boarding_pass[slice(7, len(boarding_pass))]
+
+    current_row_range = INITIAL_ROW_RANGE
+    current_column_range = INITIAL_COLUMN_RANGE
+
+    for index, value in enumerate(row):
+        if index == len(row):
+            if value == FRONT:
+                current_row_range = current_row_range[0]
+            elif value == BACK:
+                current_row_range = current_row_range[1]
+        else:
+            if value == FRONT:
+                current_row_range = get_lower_half(current_row_range)
+            elif value == BACK:
+                current_row_range = get_upper_half(current_row_range)
+
+    row = current_row_range[0]
+
+    for index, value in enumerate(column):
+        if index == len(column):
+            if value == LEFT:
+                current_column_range = current_column_range[0]
+            elif value == RIGHT:
+                current_column_range = current_column_range[1]
+        else:
+            if value == LEFT:
+                current_column_range = get_lower_half(current_column_range)
+            elif value == RIGHT:
+                current_column_range = get_upper_half(current_column_range)
+
+    column = current_column_range[0]
+
+    seats.append(
+        {
+            "row": row,
+            "column": column,
+            "pass": boarding_pass,
+            "seat_id": get_seat_id(row, column),
         }
+    )
 
 
-if __name__ == "__main__":
-    f = open("./inputs/day5.txt")
-    boarding_passes = filter(lambda x: x != "", f.read().split("\n"))
-    seats = []
+def seat_id(e):
+    return e["seat_id"]
 
-    for boarding_pass in boarding_passes:
-        seat = get_seat(boarding_pass, 0, SEAT)
-        seats.append(seat)
 
-    def seatID(elem):
-        return elem["seatID"]
+seats.sort(key=seat_id)
 
-    seats.sort(reverse=True, key=seatID)
+seat_ids = list(map((lambda x: x["seat_id"]), seats))
+full_seat_ids = range(seat_ids[0], len(seat_ids))
 
-    print(seats[0])
 
-    f.close()
+def contains_seat_id(e):
+    if e not in seat_ids:
+        return True
+
+
+print(filter(contains_seat_id, full_seat_ids))
+
+f.close()
