@@ -1,7 +1,6 @@
 def parse_input():
     f = open("input.py", "r")
     lines = f.readlines()
-
     return lines
 
 
