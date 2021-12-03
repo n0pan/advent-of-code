@@ -1,4 +1,4 @@
-# input = [
+# test_scenario = [
 #     199,
 #     200,
 #     208,
