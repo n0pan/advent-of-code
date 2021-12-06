@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-is_testing = True
+is_testing = False
 file_name = "test_input" if is_testing else "input"
 report = open(file_name).read().strip().split("\n")
 
@@ -51,9 +51,6 @@ class ReportParser:
             else:
                 binary_gamma_rate += "1"
                 binary_epsilon_rate += "0"
-
-        print(binary_epsilon_rate)
-        print(binary_gamma_rate)
 
         self.gamma_rate = self.get_decimal_from_binary(binary_gamma_rate)
         self.epsilon_rate = self.get_decimal_from_binary(binary_epsilon_rate)
@@ -133,8 +130,8 @@ class ReportParser:
         print("The epsilon rate is: ", self.epsilon_rate)
         print("The power consumption rating is: ", self.power_consumption_rating)
         print("------------------------------------------------------------------")
-        print("The CO2 scrubber rating is: ", self.co2_scrubber_rating)
         print("The oxygen generator rating is: ", self.oxygen_generator_rating)
+        print("The CO2 scrubber rating is: ", self.co2_scrubber_rating)
         print("The life support rating is: ", self.life_support_rating)
 
 

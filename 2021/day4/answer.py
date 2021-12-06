@@ -13,4 +13,4 @@ class BingoBoard:
 
 
 if __name__ == "__main":
-    print('test')
+    print("test")
