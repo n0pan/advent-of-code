@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 
 is_testing = False
-file_name = "test_input" if is_testing else "input"
-turns = open(file_name).read().strip().split("\n")
+
 
 scores = {
     "X": 1,
@@ -15,6 +14,9 @@ DRAW_SCORE = 3
 LOSS_SCORE = 0
 
 total_score = 0
+
+def parse_file(file_name):
+    return open(file_name).read().strip()
 
 def add_draw_score(move):
     global total_score
@@ -29,6 +31,9 @@ def add_loss_score(move):
     total_score += LOSS_SCORE + scores[move]
 
 if __name__ == "__main__":
+    file_name = "test_input" if is_testing else "input"
+    turns = parse_file(file_name)
+
     for turn in turns:
         moves = turn.split(" ")
 
