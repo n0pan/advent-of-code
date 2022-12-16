@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-is_testing = True
-
+IS_TESTING = True
 
 def parse_file(file_name):
-    return open(file_name).read().strip()
+    """read and parse input file"""
+    return open(file_name, encoding="utf-8").read().strip()
 
 
 if __name__ == "__main__":
-    file_name = "test_input" if is_testing else "input"
+    FILE_NAME = "test_input" if IS_TESTING else "input"
