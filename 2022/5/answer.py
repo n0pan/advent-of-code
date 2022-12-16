@@ -1,6 +1,8 @@
+"""day 5"""
 #!/usr/bin/env python3
 
 IS_TESTING = True
+
 
 def parse_file(file_name):
     """read and parse input file"""
